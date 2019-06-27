@@ -85,7 +85,30 @@
 		<main class="container" role="main">
 
 		
-		Pedidos
+		<table class="table">
+ 			<thead>
+   				<tr>
+			        <th>Nome</th>
+			        <th>Preço</th>
+			        <th>Quantidade</th>
+			        <th>Remover</th>
+ 				</tr>
+   			</thead>
+			<tbody>
+				<tr th:each="pedido: ${pedidos}">
+					<td th:text="${pedido.mPrato.nome}"> </td>
+					<td th:text="${pedido.mPrato.preco}"> </td>
+					<td th:text="${pedido.quantidade}"> </td>
+				  <td>Remover</td>
+				</tr>
+				<tr class="total">
+				  <th scope="row">5</th>
+				  <td>Total</td>
+				  <td>400$</td>
+				  <td></td>
+				</tr>
+			  </tbody>
+			</table>
 	 
 			
 		

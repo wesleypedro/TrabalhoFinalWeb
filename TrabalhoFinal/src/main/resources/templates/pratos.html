@@ -106,9 +106,12 @@
 			      <td> <a th:href="@{/tropical/excluir/{codigo}(codigo = ${prato.codigo})}"> <button type="button" class="btn btn-danger">Excluir</button> </a> </td>
 			      <!--td> <a th:href="@{/pessoa/atualizar/{codigo}(codigo = ${pessoa.codigo})}"> <button type="button" class="btn btn-primary">Atualizar</button> </a> </td>
 			      <td sec:authorize="hasRole('ROLE_ADMIN')"><a href="#">admin</a> </td>
-			      <td> <img width="200" height="200" th:src="@{'/images/'+${pessoa.nome}+.png}"/> </td-->  
+			      <td> <img width="200" height="200" th:src="@{'/images/'+${pessoa.nome}+.png}"/> </td->  
 			    </tr>
 			  </tbody>
+			  
+			  <a><i class="fas fa-times"></i></a>
+			  
 			</table-->
 		
 			<div class="row">
@@ -122,9 +125,9 @@
 						</div>
 						<div class="card-footer">
 							<a sec:authorize="isAnonymous()" th:href="@{/cadastro}"> <button type="button" class="btn btn-primary">Adicionar</button> </a></br>
-							<!--a sec:authorize="hasRole('ROLE_USER')" th:href="@{/pedidos/adicionar/{codigo}(codigo = ${prato.codigo})}"> <button type="button" class="btn btn-primary">Adicionar</button> </a></br-->
+							<a sec:authorize="hasRole('ROLE_USER')" th:href="@{/pedidos/adicionar/{codigo}(codigo = ${prato.codigo})}"> <button type="button" class="btn btn-primary">Adicionar</button> </a></br>
 							<!--input type="number" sec:authorize="hasRole('ROLE_USER')" name="quantidade"></br-->
-							<a sec:authorize="hasRole('ROLE_USER')" th:href="@{/pedidos/adicionar}"> <button type="button" class="btn btn-primary">Adicionar</button> </a></br>
+							<!--a sec:authorize="hasRole('ROLE_USER')" th:href="@{/pedidos/adicionar}"> <button type="button" class="btn btn-primary">Adicionar</button> </a></br-->
 				      		<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{tropical/excluir/{codigo}(codigo = ${prato.codigo})}"> <button type="button" class="btn btn-danger">Remover</button> </a>
 				      	</div>
 			      	</div>
@@ -134,7 +137,57 @@
 	
 			<hr class="featurette-divider">
 	
-	
+		
+		
+		
+		
+		
+		
+			<div class="modal fade" id="modalCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+			    	<div class="modal-content">
+			    	
+						<div class="modal-header">
+			  				<h4 class="modal-title" id="myModalLabel">Seu carrinho</h4>
+			  				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		    					<span aria-hidden="true">×</span>
+			  				</button>
+						</div>
+						
+						<div class="modal-body">
+			  				<table class="table table-hover">
+			    				<thead>
+			      					<tr>
+								        <th>Nome</th>
+								        <th>Preço</th>
+								        <th>Quantidade</th>
+								        <th>Remover</th>
+			      					</tr>
+			    				</thead>
+			    				<tbody>
+			      					<tr th:each="pedido: ${pedidos}">
+			      						<td th:text="${pedido.mPrato.nome}"> </td>
+			      						<td th:text="${pedido.mPrato.preco}"> </td>
+			      						<td th:text="${pedido.quantidade}"> </td>
+								        <td><a th:href="@{/pedidos/remover/{codigo}(codigo = ${pedido.mPrato.codigo})}"> <button type="button" class="btn btn-danger">Remover</button></a></td>
+			      					</tr>
+			      					<tr class="total">
+								        <th scope="row">5</th>
+								        <td>Total</td>
+								        <td>400$</td>
+								        <td></td>
+			      					</tr>
+							    </tbody>
+						  	</table>
+						</div>
+			
+						<div class="modal-footer">
+					        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+					        <button class="btn btn-primary">Checkout</button>
+			      		</div>
+			    	</div>
+		  		</div>
+			</div>
 	
 			
 	 
