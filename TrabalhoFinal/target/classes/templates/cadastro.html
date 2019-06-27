@@ -1,0 +1,191 @@
+<!Doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="UTF-8">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+		
+		<!-- Meu CSS -->
+		<link rel="stylesheet" type="text/css" href="/css/style.css" />
+
+		
+		<!-- Javascript -->
+		<script src="/js/jquery.js"></script>
+		<script src="/js/mask.js"></script>	
+		
+		<title>Tropical .::. Cadastro</title>
+	</head>
+	
+	
+	<body>
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+				<a class="navbar-brand" href="/"> 
+					<img src="/img/logoppqp.png" max-width="70" class="img-fluid" id="logo-site" alt="Restaurante Tropical">
+				</a>
+	
+				<button class="navbar-toggler navbar-brand" type="button" data-toggle="collapse"
+					data-target="#navbarCollapse" aria-controls="navbarCollapse"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+	
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="/">Home</a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link" href="/pratos">Pratos</a>
+						</li>
+						
+						<li sec:authorize="isAnonymous()" class="nav-item">
+							<a class="nav-link" href="/login">Login</a>
+						</li>
+						
+						<li sec:authorize="isAnonymous()" class="nav-item active">
+							<a class="nav-link" href="/cadastro">Cadastro</a>
+						</li>
+						
+						<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+							<a class="nav-link" href="/tropical/cadastrarPrato">Cadastrar Pratos</a>
+						</li>
+						
+						<li sec:authorize="hasRole('ROLE_USER')" class="nav-item">
+							<a class="nav-link" href="/user/pedidos">Pedidos</a>
+						</li>
+						
+						<li sec:authorize="hasRole('ROLE_USER')" class="nav-item">
+							<a class="nav-link" href="/user/historico">Histórico</a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link" href="/sobre">Sobre Nós</a>
+						</li>
+						
+					</ul>
+					
+					<form class="form-inline mt-2 mt-md-0">
+						<input class="form-control mr-sm-2" type="text"
+							placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+					</form>
+				</div>
+			</nav>
+		</header>
+		
+	
+		
+		
+		<main class="container" role="main">
+			Inicio MAIN
+			<form action="#" th:action="@{/user/cadastrar}" method="post" id="cadastro" data-toggle="validator" role="form" th:object="${usuario}">
+				<div class="alert alert-danger" role="alert" th:if="${!#strings.isEmpty(mensagem)}">
+					<span th:text="${mensagem}"></span>
+				</div>
+				<!--div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+					<div th:each="detailedError: ${#fields.detailedErrors()}">
+						<span th:text="${detailedError.message}"></span>
+					 </div>
+				</div-->
+				
+				<div class="form-row">
+				
+					<input type="hidden" th:field="*{{codigo}}">
+					
+					<div class="form-group  col-md-6">
+						<label for="nome" class="control-label"> Nome </label> 
+						<input type="text" th:field="*{nome}" class="form-control" placeholder="Digite seu Nome..." required>
+					</div>
+					
+					<div class="form-group col-md-2">
+						<label for="cpf" class="control-label"> CPF </label> 
+						<input type="text" th:field="*{cpf}" class="cpf form-control" placeholder="xxx.xxx.xxx-xx" maxlength="14" data-minlenght="14" required>
+						<small id="cpfEntrada" class="form-text text-muted">Entre com seu verdadeiro CPF</small>
+					</div>
+					
+					<div class="form-group col-md-4">
+						<label for="email"> Email </label> 
+						<input type="email" th:field="*{email}" class="form-control" placeholder="Digite seu E-mail" 
+							data-error="Por favor, informe um e-mail correto." required>
+						<div class="help-block with-errors"></div>
+					</div>
+					
+					<div class="form-group col-md-3">
+						<label for="nascimento" class="control-label"> Data de Nascimento </label> 
+						<input type="text" th:field="*{{nascimento}}" class="form-control nascimento" placeholder="dd/mm/aaaa" required>
+					</div>
+					
+					<div class="form-group col-md-3">
+						<label for="cidade" class="control-label"> Cidade </label>
+						<input type="text" th:field="*{cidade}" class="form-control" placeholder="Digite sua Cidade..." required>
+					</div>
+					
+					<div class="form-group col-md-6">
+						<label for="rua" class="control-label"> Rua </label>
+						<input type="text" th:field="*{rua}" class="form-control" placeholder="Digite sua Rua..." required>
+					</div>
+					
+					<div class="form-group col-md-4">
+						<label for="bairro" class="control-label" > Bairro </label>
+						<input type="text" th:field="*{bairro}" class="form-control" placeholder="Digite seu Bairro..." required>
+					</div>
+					
+					<div class="form-group col-md-2">
+						<label for="numero" class="control-label"> Número </label>
+						<input type="text" th:field="*{{numero}}" class="form-control" placeholder="Digite o Número..." required>
+					</div>
+					
+					<div class="form-group col-md-3">
+					    <label for="inputPassword" class="control-label">Senha</label>
+					    <input type="password" class="form-control" id="inputPassword" placeholder="Digite sua Senha..."  
+					      data-minlength="6" required>
+					    <small id="cpfEntrada" class="form-text text-muted">Mínimo de seis (6) dígitos</small>
+					</div>
+					
+					<div class="form-group col-md-3">
+					    <label for="inputConfirm" class="control-label">Confirme a Senha</label>
+					    <input type="password" th:field="*{senha}" class="form-control" placeholder="Confirme sua Senha..." 
+					      data-match="#inputPassword" data-match-error="Atenção! As senhas não estão iguais." required>
+					    <div class="help-block with-errors"></div>
+					</div>
+					
+					<div class="form-group col-md-6">
+					    <div class="checkbox">
+					      <label>
+					        <input type="checkbox" data-error="Você deve marcar este campo!" required> Comprometo-me a pagar minhas contas.
+					      </label>
+					      <div class="help-block with-errors"></div>
+					    </div>
+					</div>
+					
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary" value="Cadastrar">
+					</div>
+				</div>
+			</form>
+		
+		</main>
+		
+		
+		<footer class="container">
+			<p class="float-right">
+				<a href="#">Topo</a>
+			</p>
+			<p>
+				&copy; Tropical Delivery 
+				&middot; <a href="#">Privacy</a> 
+				&middot; <a href="#">Terms</a>
+			</p>
+		</footer>
+		
+		<script src="/js/js.js"></script>
+		<script src="/js/popper.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+	</body>
+</html>

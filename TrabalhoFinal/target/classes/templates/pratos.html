@@ -1,0 +1,162 @@
+<!Doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="UTF-8">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+		
+		<!-- Meu CSS -->
+		<link rel="stylesheet" type="text/css" href="/css/style.css" />
+		
+		
+		<!-- Javascript -->
+		<script src="/js/jquery.js"></script>
+		<script src="/js/mask.js"></script>	
+		
+		
+		<title>Tropical .::. Pratos</title>
+	</head>
+	
+	
+	<body>
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+				<a class="navbar-brand" href="/"> 
+					<img src="/img/logopp.png" max-width="70" class="img-fluid" id="logo-site" alt="Restaurante Tropical">
+				</a>
+	
+				<button class="navbar-toggler navbar-brand" type="button" data-toggle="collapse"
+					data-target="#navbarCollapse" aria-controls="navbarCollapse"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+	
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="/">Home</a>
+						</li>
+						
+						<li class="nav-item active">
+							<a class="nav-link" href="/pratos">Pratos</a>
+						</li>
+						
+						<li sec:authorize="isAnonymous()" class="nav-item">
+							<a class="nav-link" href="/login">Login</a>
+						</li>
+						
+						<li sec:authorize="isAnonymous()" class="nav-item">
+							<a class="nav-link" href="/cadastro">Cadastro</a>
+						</li>
+						
+						<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+							<a class="nav-link" href="/tropical/cadastrarPrato">Cadastrar Pratos</a>
+						</li>
+						
+						<li sec:authorize="hasRole('ROLE_USER')" class="nav-item">
+							<a class="nav-link" href="/user/pedidos">Pedidos</a>
+						</li>
+						
+						<li sec:authorize="hasRole('ROLE_USER')" class="nav-item">
+							<a class="nav-link" href="/user/historico">Histórico</a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link" href="/sobre">Sobre Nós</a>
+						</li>
+						
+					</ul>
+					
+					<form class="form-inline mt-2 mt-md-0">
+						<input class="form-control mr-sm-2" type="text"
+							placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+					</form>
+				</div>
+				<!-- Código modal do carrinho logo abaixo do carousel -->
+				
+				<button sec:authorize="hasRole('ROLE_USER')" type="button" class="btn btn-primary ml-2 mr-sm-2" data-toggle="modal" data-target="#modalCart">Carrinho</button>
+				<div th:if="${usuario}">
+				    <h3>Nome: </h3><h3 th:text="${usuario.nome}"></h3>
+				</div>	
+			</nav>
+		</header>
+		
+	
+		
+		
+		<main class="container" role="main">
+			<!--table class="table">
+			  <thead>
+			    <tr>
+			      <th scope="col">Nome</th>
+			      <th scope="col">Preço</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr th:each = "prato: ${pratos}">
+			      <td th:text="${prato.nome}"> </td>
+			      <td th:text="${prato.preco}"> </td>
+			      <td> <a th:href="@{/tropical/excluir/{codigo}(codigo = ${prato.codigo})}"> <button type="button" class="btn btn-danger">Excluir</button> </a> </td> 
+			      <td> <a th:href="@{/tropical/excluir/{codigo}(codigo = ${prato.codigo})}"> <button type="button" class="btn btn-danger">Excluir</button> </a> </td>
+			      <td> <a th:href="@{/tropical/excluir/{codigo}(codigo = ${prato.codigo})}"> <button type="button" class="btn btn-danger">Excluir</button> </a> </td>
+			      <!--td> <a th:href="@{/pessoa/atualizar/{codigo}(codigo = ${pessoa.codigo})}"> <button type="button" class="btn btn-primary">Atualizar</button> </a> </td>
+			      <td sec:authorize="hasRole('ROLE_ADMIN')"><a href="#">admin</a> </td>
+			      <td> <img width="200" height="200" th:src="@{'/images/'+${pessoa.nome}+.png}"/> </td-->  
+			    </tr>
+			  </tbody>
+			</table-->
+		
+			<div class="row">
+				<div th:each="prato: ${pratos}" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+					<div class="box-part card text-center">
+						<img class="rounded-circle mx-auto" th:src="@{'/images/'+${prato.nome}+'.'+${prato.extensao}}"
+							th:alt="${prato.nome}" th:title="${prato.nome}" width="140" height="140">
+						<div class="card-body">
+							<h2 th:text="${prato.nome}"></h2>
+							<p th:text="'R$ ' + ${prato.preco}"></p>
+						</div>
+						<div class="card-footer">
+							<a sec:authorize="isAnonymous()" th:href="@{/cadastro}"> <button type="button" class="btn btn-primary">Adicionar</button> </a></br>
+							<!--a sec:authorize="hasRole('ROLE_USER')" th:href="@{/pedidos/adicionar/{codigo}(codigo = ${prato.codigo})}"> <button type="button" class="btn btn-primary">Adicionar</button> </a></br-->
+							<!--input type="number" sec:authorize="hasRole('ROLE_USER')" name="quantidade"></br-->
+							<a sec:authorize="hasRole('ROLE_USER')" th:href="@{/pedidos/adicionar}"> <button type="button" class="btn btn-primary">Adicionar</button> </a></br>
+				      		<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{tropical/excluir/{codigo}(codigo = ${prato.codigo})}"> <button type="button" class="btn btn-danger">Remover</button> </a>
+				      	</div>
+			      	</div>
+				</div>
+				
+			</div>
+	
+			<hr class="featurette-divider">
+	
+	
+	
+			
+	 
+			
+		
+		</main>
+		
+		
+		<footer class="container">
+			<p class="float-right">
+				<a href="#">Topo</a>
+			</p>
+			<p>
+				&copy; Tropical Delivery 
+				&middot; <a href="#">Privacy</a> 
+				&middot; <a href="#">Terms</a>
+			</p>
+		</footer>
+	
+	
+		<script src="/js/js.js"></script>
+		<script src="/js/popper.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+	</body>
+</html>

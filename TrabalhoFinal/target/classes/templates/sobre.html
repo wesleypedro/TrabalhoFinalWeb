@@ -1,0 +1,109 @@
+<!Doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="UTF-8">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+		
+		<!-- Meu CSS -->
+		<link rel="stylesheet" type="text/css" href="/css/style.css" />
+		
+		
+		<title>Tropical .::. Sobre</title>
+	</head>
+	
+	
+	<body>
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+				<a class="navbar-brand" href="/"> 
+					<img src="/img/logoppqp.png" max-width="70" class="img-fluid" id="logo-site" alt="Restaurante Tropical">
+				</a>
+	
+				<button class="navbar-toggler navbar-brand" type="button" data-toggle="collapse"
+					data-target="#navbarCollapse" aria-controls="navbarCollapse"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+	
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="/">Home</a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link" href="/pratos">Pratos</a>
+						</li>
+						
+						<li sec:authorize="isAnonymous()" class="nav-item">
+							<a class="nav-link" href="/login">Login</a>
+						</li>
+						
+						<li sec:authorize="isAnonymous()" class="nav-item">
+							<a class="nav-link" href="/cadastro">Cadastro</a>
+						</li>
+						
+						<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+							<a class="nav-link" href="/tropical/cadastrarPrato">Cadastrar Pratos</a>
+						</li>
+						
+						<li sec:authorize="hasRole('ROLE_USER')" class="nav-item">
+							<a class="nav-link" href="/user/pedidos">Pedidos</a>
+						</li>
+						
+						<li sec:authorize="hasRole('ROLE_USER')" class="nav-item">
+							<a class="nav-link" href="/user/historico">Histórico</a>
+						</li>
+						
+						<li class="nav-item active">
+							<a class="nav-link" href="/sobre">Sobre Nós</a>
+						</li>
+						
+					</ul>
+					
+					<form class="form-inline mt-2 mt-md-0">
+						<input class="form-control mr-sm-2" type="text"
+							placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+					</form>
+				</div>
+				<!-- Código modal do carrinho logo abaixo do carousel -->
+				
+				<button sec:authorize="hasRole('ROLE_USER')" type="button" class="btn btn-primary ml-2 mr-sm-2" data-toggle="modal" data-target="#modalCart">Carrinho</button>
+				<div th:if="${usuario}">
+				    <h3>Nome: </h3><h3 th:text="${usuario.nome}"></h3>
+				</div>	
+			</nav>
+		</header>
+		
+		
+		<main class="container" role="main">
+
+		
+		
+	
+		
+		</main>
+		
+		
+		<footer class="container">
+			<p class="float-right">
+				<a href="#">Topo</a>
+			</p>
+			<p>
+				&copy; Tropical Delivery 
+				&middot; <a href="#">Privacy</a> 
+				&middot; <ahref="#">Terms</a>
+			</p>
+		</footer>
+		
+		<script src="/js/jquery.js"></script>
+		<script src="/js/popper.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+	</body>
+</html>
